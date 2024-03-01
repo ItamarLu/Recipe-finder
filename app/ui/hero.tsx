@@ -8,13 +8,13 @@ export default function Hero() {
       </div>
       <div className="w-2/4 flex justify-end min-w-40 sm:min-w-80">
         <div className='sm:absolute flex items-center'>
-          <Image
+          {/* <Image
             src="/food-1.png"
             width={1280}
             height={865}
             className='max-w-40 sm:max-w-80'
             alt="Image of variety of food on a plate. By Sr. M. Jutta from Pixabay"
-          />
+          /> */}
         </div>
       </div>
     </div>
