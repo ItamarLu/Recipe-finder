@@ -23,16 +23,16 @@ export default function ContactMe() {
   const isActiveStyles : string = clsx("absolute flex gap-1 w-auto p-2 min-w-max rounded-md shadow-sm shadow-slate-400 text-white dark:shadow-slate-950 bg-gray-900 text-sm font-bold transition-all duration-200 scale-0 origin-bottom mt-[-40px]", {'scale-100' : isActive})
 
   return (
-    <div className="flex flex-col gap-3">
-      <p>Contact Me</p>
+    <div className="flex flex-col gap-2 items-center">
+      <p className='font-medium text-base'>Contact Me</p>
       <div className="flex gap-2">
         <button onClick={() => {
               handleGoTo("https://github.com/ItamarLu")
             }}>
           <Image 
             src="./github-white.svg"
-            width={30}
-            height={30}
+            width={25}
+            height={25}
             className='hover:animate-pulse'
             alt="github icon"/>
         </button>
@@ -41,17 +41,17 @@ export default function ContactMe() {
             }}>
           <Image 
             src="./linkedin-white.svg"
-            width={30}
-            height={30}
+            width={25}
+            height={25}
             className='hover:animate-pulse'
             alt="linkedin icon"/>
         </button>
         <div className='group flex justify-center'>
           <button onClick={handlePress}>
             {isActive? 
-              <EnvelopeOpenIcon className='size-[30px] hover:animate-pulse'/> 
+              <EnvelopeOpenIcon className='size-[25px] hover:animate-pulse'/> 
             : 
-              <EnvelopeIcon className='size-[30px] hover:animate-pulse'/>
+              <EnvelopeIcon className='size-[25px] hover:animate-pulse'/>
             }
           </button>
           <span className={isActiveStyles}>

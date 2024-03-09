@@ -1,1 +1,1 @@
-RECIPE FINDER
+Recipe Finder Web App

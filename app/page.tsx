@@ -1,5 +1,4 @@
 import Hero from "./ui/hero";
-import Ingredients from "./ui/ingredients";
 import Search from "./ui/search";
 
 export default function Home() {

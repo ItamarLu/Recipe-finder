@@ -3,10 +3,9 @@
 import { ChangeEvent, useState, FormEvent } from 'react';
 import { PlusIcon } from '@heroicons/react/24/solid'
 import Ingredients from './ingredients';
+import { fetchRecipesByIngredients } from '../lib/data';
 
 export default function Search() {
-
-
   const [ingredient, setIngredient] = useState("");
   const [ingredientsList, setIngredientsList] = useState<string[] | null>(null);
 
@@ -32,9 +31,18 @@ export default function Search() {
     );
   }
 
+  const handleSearch = async () => {
+    try {
+      const recipes = await fetchRecipesByIngredients();
+      console.log(recipes);
+    } catch (error) {
+      console.error('Error searching recipes:', error);
+    }
+  };
+
   return (
-    <div className="py-10 flex flex-col gap-5">
-      <form className="flex items-center gap-1 w-fit bg-slate-950 rounded-md" onSubmit={handleAddIngredient}>
+    <div className="py-10 flex flex-col items-start gap-5">
+      <form autoComplete="off" className="flex items-center gap-1 w-fit bg-slate-950 rounded-md" onSubmit={handleAddIngredient}>
         <label htmlFor="ingredientInput" className="sr-only">
           Ingredient Input
         </label>
@@ -53,7 +61,14 @@ export default function Search() {
         </button>
       </form>
       
-      {ingredientsList ? <Ingredients list={ingredientsList} removeFunction={handleRemoveIngredient}/> : null}
+      {ingredientsList ? 
+        <Ingredients list={ingredientsList} removeFunction={handleRemoveIngredient}/> 
+        : null
+      }
+
+      <button className="border border-slate-950 hover:border-slate-200 bg-slate-950 rounded-md py-2 px-4 duration-300"onClick={handleSearch}>
+        <p>Search Recipes</p>
+      </button>
     </div>
   );
 }
