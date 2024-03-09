@@ -10,7 +10,7 @@ export default function Ingredients({
 
   return (
     <div>
-      <ul className="flex flex-wrap gap-x-5 gap-y-2 max-w-xl">
+      <ul className="flex flex-wrap gap-x-5 gap-y-2">
         {list.map((name) => (
           <li className="flex items-center border border-slate-200 pl-2 py-1 rounded-md" key={name}>
             {name}
