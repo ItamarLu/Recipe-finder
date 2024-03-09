@@ -33,8 +33,11 @@ export default function Search() {
 
   const handleSearch = async () => {
     try {
-      const recipes = await fetchRecipesByIngredients();
-      console.log(recipes);
+      const recipe = await fetchRecipesByIngredients();
+      console.log(recipe[0])
+      console.log(`Title: ${recipe[0].title}`);
+      console.log(`Ingredients: ${recipe[0].ingredients}`);
+      console.log(`Instructions: ${recipe[0].instructions}`);
     } catch (error) {
       console.error('Error searching recipes:', error);
     }
