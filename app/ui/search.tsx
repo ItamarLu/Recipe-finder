@@ -34,17 +34,19 @@ export default function Search() {
   }
 
   const handleSearch = async () => {
-    try {
-      const recipeQuery = await fetchRecipesByIngredients();
-      const recipeResult = recipeQuery[0];
-      const formattedRecipe = {
-        title: recipeResult.title,
-        ingredients: recipeResult.ingredients,
-        instructions: recipeResult.instructions
-      };
-      setRecipe(formattedRecipe);
-    } catch (error) {
-      console.error('Error searching recipes:', error);
+    if (ingredientsList) {
+      try {
+        const recipeQuery = await fetchRecipesByIngredients(ingredientsList);
+        const recipeResult = recipeQuery[0];
+        const formattedRecipe = {
+          title: recipeResult.title,
+          ingredients: recipeResult.ingredients,
+          instructions: recipeResult.instructions
+        };
+        setRecipe(formattedRecipe);
+      } catch (error) {
+        console.error('Error searching recipes:', error);
+      }
     }
   };
 
