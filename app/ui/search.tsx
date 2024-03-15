@@ -5,15 +5,18 @@ import { PlusIcon } from '@heroicons/react/24/solid'
 import Ingredients from './ingredients';
 import { fetchRecipesByIngredients } from '../lib/data';
 import Recipe from './recipe';
+import OtherRecipes from './otherRecipes';
+import { RecipeSkeleton, RecipesSkeleton } from './skeletons';
 
 export default function Search() {
   const [ingredient, setIngredient] = useState("");
   const [ingredientsList, setIngredientsList] = useState<string[] | null>(null);
   const [recipe, setRecipe] = useState<{title: string, ingredients: string[], instructions: string} | null>(null);
+  const [otherRecipes, setOtherRecipes] = useState<object[] | null>(null)
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleIngredientInput = (e:ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    // Check if the entered value contains any numbers
+    const value = e.target.value.toLowerCase().trim();
     if (/^[a-zA-Z\s]*$/.test(value)) {
       setIngredient(value);
     }
@@ -21,8 +24,9 @@ export default function Search() {
 
   const handleAddIngredient = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); 
-    if (ingredient.trim() !== "") { 
-      setIngredientsList(prevIngredients => prevIngredients ? [...prevIngredients, ingredient] : [ingredient]);
+    if (ingredient !== "") {
+      const filteredIngredients = [(ingredient as string).trim()].filter(ing => !(ingredientsList as string[] ?? []).includes(ing));
+      setIngredientsList(prevIngredients => [...(prevIngredients ?? []), ...filteredIngredients]);
       setIngredient("");
     }
   }
@@ -35,59 +39,79 @@ export default function Search() {
 
   const handleSearch = async () => {
     if (ingredientsList) {
+      setIsSearching(true);
       try {
         const recipeQuery = await fetchRecipesByIngredients(ingredientsList);
-        const recipeResult = recipeQuery[0];
         const formattedRecipe = {
-          title: recipeResult.title,
-          ingredients: recipeResult.ingredients,
-          instructions: recipeResult.instructions
+          title: recipeQuery[0].title,
+          ingredients: recipeQuery[0].ingredients,
+          instructions: recipeQuery[0].instructions
         };
+        const formattedOtherRecipes = [
+          recipeQuery[1],
+          recipeQuery[2],
+          recipeQuery[3],
+        ]
         setRecipe(formattedRecipe);
+        setOtherRecipes(formattedOtherRecipes);
       } catch (error) {
         console.error('Error searching recipes:', error);
+      } finally {
+        setIsSearching(false);
       }
     }
   };
 
   return (
-    <div className='flex flex-col md:flex-row'>
-      <div className="py-5 flex flex-col items-start gap-5 md:w-1/2">
-        <form autoComplete="off" className="flex items-center gap-1 w-fit bg-slate-950 rounded-md" onSubmit={handleAddIngredient}>
-          <label htmlFor="ingredientInput" className="sr-only">
-            Ingredient Input
-          </label>
-          <input
-            id='ingredientInput'
-            className="bg-slate-950 rounded-md py-2 pl-5 pr-1 placeholder:text-gray-500 h-[50px] outline-none"
-            value={ingredient}
-            placeholder="Enter Ingredient"
-            onChange={handleIngredientInput}
-          />
-          <button 
-          className='rounded-md px-2 group h-[50px]' 
-          type="submit"
-          >
-            <PlusIcon className='size-8 text-gray-500 group-hover:text-slate-200 group-hover:animate-pulse'/>
-          </button>
-        </form>
-        
-        {ingredientsList ? 
-          <Ingredients list={ingredientsList} removeFunction={handleRemoveIngredient}/> 
-          : null
-        }
+    <div className='flex flex-col gap-5'>
+      <div className='flex flex-col md:flex-row gap-5'>
+        <div className="flex flex-col items-start gap-5 md:w-1/2">
+          <form autoComplete="off" className="flex items-center gap-1 w-fit bg-slate-950 rounded-md" onSubmit={handleAddIngredient}>
+            <label htmlFor="ingredientInput" className="sr-only">
+              Ingredient Input
+            </label>
+            <input
+              id='ingredientInput'
+              className="bg-slate-950 rounded-md py-2 pl-5 pr-1 placeholder:text-gray-500 h-[50px] outline-none"
+              value={ingredient}
+              placeholder="Enter Ingredient"
+              onChange={handleIngredientInput}
+            />
+            <button 
+            className='rounded-md px-2 group h-[50px]' 
+            type="submit"
+            >
+              <PlusIcon className='size-8 text-gray-500 group-hover:text-slate-200 group-hover:animate-pulse'/>
+            </button>
+          </form>
+          
+          {ingredientsList ? 
+            <Ingredients list={ingredientsList} removeFunction={handleRemoveIngredient}/> 
+            : null
+          }
 
-        <button className="border border-slate-950 hover:border-slate-200 bg-slate-950 rounded-md py-2 px-4 duration-300"onClick={handleSearch}>
-          <p>Search Recipes</p>
-        </button>
+          <button className="border border-slate-950 hover:border-slate-200 bg-slate-950 rounded-md py-2 px-4 duration-300"onClick={handleSearch}>
+            <p>Search Recipes</p>
+          </button>
+        </div>
+        {isSearching? (
+            <RecipeSkeleton />
+          ) : ( recipe? 
+            <Recipe
+              ingTitle={recipe.title}
+              ings={recipe.ingredients}
+              ingInstructions={recipe.instructions}
+            /> : null
+          )}
       </div>
-     {recipe? 
-      <Recipe 
-        ingTitle={recipe.title} 
-        ings={recipe.ingredients} 
-        ingInstructions={recipe.instructions}
-      /> 
-     : null}
+      {isSearching? (
+          <RecipesSkeleton />
+       ) : ( otherRecipes? 
+          <div className='flex flex-col gap-3 items-center'>
+            <h1>Other Options</h1>
+            <OtherRecipes otherRecipes={otherRecipes} />
+          </div> : null
+        )}
     </div>
   );
 }

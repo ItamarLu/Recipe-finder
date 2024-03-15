@@ -11,13 +11,18 @@ export async function fetchRecipesByIngredients(ingredients: any) {
       SELECT title, ingredients, instructions
       FROM recipes
       WHERE EXISTS (
-      SELECT 1
-      FROM jsonb_array_elements_text(processed_ingredients) AS ingredient
-      WHERE ingredient = ANY(${ingredients})
-      GROUP BY title, ingredients, instructions
-      HAVING COUNT(DISTINCT ingredient) = ${ingredients.length}
+        SELECT 1
+        FROM jsonb_array_elements_text(processed_ingredients) AS ingredient
+        WHERE ingredient = ANY(${ingredients})
+        GROUP BY title
+        HAVING COUNT(DISTINCT ingredient) >= ${ingredients.length - 1}
       )
-      LIMIT 1;
+      ORDER BY (
+        SELECT COUNT(DISTINCT ingredient)
+        FROM jsonb_array_elements_text(processed_ingredients) AS ingredient
+        WHERE ingredient = ANY(${ingredients})
+      ) ASC
+      LIMIT 4;
     `;
     return recipes.rows;
   } catch (error) {
