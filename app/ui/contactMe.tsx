@@ -7,6 +7,7 @@ import { EnvelopeIcon, EnvelopeOpenIcon, ClipboardDocumentIcon } from '@heroicon
 
 export default function ContactMe() {
   const [isActive, setActive] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
   
   const handleGoTo = (url : string) => {
     window.open(url,"_blank");
@@ -14,13 +15,19 @@ export default function ContactMe() {
 
   const handlePress = () => {
     isActive? setActive(false) : setActive(true);
+    setIsCopied(false);
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText('Itamarlucio19@gmail.com');
+    navigator.clipboard.writeText('Itamarlucio19@gmail.com')
+    .then(() => {
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 1000);
+    })
+    .catch(error => console.log('Error copying to clipboard:', error));
   };
 
-  const isActiveStyles : string = clsx("absolute flex gap-1 w-auto p-2 min-w-max rounded-md shadow-sm shadow-slate-400 text-white dark:shadow-slate-950 bg-gray-900 text-sm font-bold transition-all duration-200 scale-0 origin-bottom mt-[-40px]", {'scale-100' : isActive})
+  const isActiveStyles : string = clsx("absolute flex gap-1 w-auto p-2 min-w-max rounded-md shadow-sm shadow-slate-400 text-white dark:shadow-slate-950 bg-gray-900 text-sm font-bold transition-all duration-200 scale-0 origin-bottom mt-[-40px] justify-end", {'scale-100' : isActive})
 
   return (
     <div className="flex flex-col gap-2 items-center">
@@ -59,6 +66,7 @@ export default function ContactMe() {
             <button onClick={copyToClipboard}>
               <ClipboardDocumentIcon className='size-4 hover:animate-pulse'/>
             </button>
+            {isCopied && <p className="absolute w-auto p-2 min-w-max rounded-md shadow-sm shadow-slate-400 text-white dark:shadow-slate-950 bg-gray-900 text-sm font-bold transition-all duration-200 origin-bottom mt-[-45px]">Copied!</p>}
           </span>
         </div>
       </div>

@@ -1,10 +1,14 @@
-// import { SunIcon } from '@heroicons/react/24/solid';
+import Image from "next/image"
 
 export default function Header() {
   return (
-    <header className="flex items-center p-4 self-stretch">
+    <header className="flex gap-2 items-center p-4 self-stretch">
       <h1 className='font-semibold'>Recipe Finder</h1>
-      {/* <SunIcon className='size-8'/> */}
+      <Image 
+          src="./food-svgrepo-com-white.svg"
+          width={30}
+          height={30}
+          alt="white food icon from svgrepo"/>
     </header>
   )
 }

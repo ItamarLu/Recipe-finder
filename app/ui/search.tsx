@@ -40,6 +40,7 @@ export default function Search() {
   const handleSearch = async () => {
     if (ingredientsList) {
       setIsSearching(true);
+      console.log(ingredientsList)
       try {
         const recipeQuery = await fetchRecipesByIngredients(ingredientsList);
         const formattedRecipe = {
@@ -90,9 +91,11 @@ export default function Search() {
             : null
           }
 
-          <button className="border border-slate-950 hover:border-slate-200 bg-slate-950 rounded-md py-2 px-4 duration-300"onClick={handleSearch}>
-            <p>Search Recipes</p>
-          </button>
+          {(ingredientsList && ingredientsList.length > 0) ? 
+            <button className="border border-slate-950 hover:border-slate-200 bg-slate-950 rounded-md py-2 px-4 duration-300"onClick={handleSearch}>
+              <p>Search Recipes</p>
+            </button> : null
+          }
         </div>
         {isSearching? (
             <RecipeSkeleton />
