@@ -27,11 +27,11 @@ export default function ContactMe() {
     .catch(error => console.log('Error copying to clipboard:', error));
   };
 
-  const isActiveStyles : string = clsx("absolute flex gap-1 w-auto p-2 min-w-max rounded-md shadow-sm shadow-slate-400 text-white dark:shadow-slate-950 bg-gray-900 text-sm font-bold transition-all duration-200 scale-0 origin-bottom mt-[-40px] justify-end", {'scale-100' : isActive})
+  const isActiveStyles : string = clsx("absolute flex gap-1 w-auto p-2 min-w-max rounded-md text-white bg-red-800 text-sm font-bold transition-all duration-200 scale-0 origin-bottom mt-[-40px] justify-end", {'scale-100' : isActive})
 
   return (
     <div className="flex flex-col gap-2 items-center">
-      <p className='font-medium text-base'>Contact Me</p>
+      <p className='font-medium text-base text-slate-100'>Contact Me</p>
       <div className="flex gap-2">
         <button onClick={() => {
               handleGoTo("https://github.com/ItamarLu")
@@ -56,9 +56,9 @@ export default function ContactMe() {
         <div className='group flex justify-center'>
           <button onClick={handlePress}>
             {isActive? 
-              <EnvelopeOpenIcon className='size-[25px] hover:animate-pulse'/> 
+              <EnvelopeOpenIcon className='size-[25px] hover:animate-pulse text-slate-100'/> 
             : 
-              <EnvelopeIcon className='size-[25px] hover:animate-pulse'/>
+              <EnvelopeIcon className='size-[25px] hover:animate-pulse text-slate-100'/>
             }
           </button>
           <span className={isActiveStyles}>
@@ -66,7 +66,7 @@ export default function ContactMe() {
             <button onClick={copyToClipboard}>
               <ClipboardDocumentIcon className='size-4 hover:animate-pulse'/>
             </button>
-            {isCopied && <p className="absolute w-auto p-2 min-w-max rounded-md shadow-sm shadow-slate-400 text-white dark:shadow-slate-950 bg-gray-900 text-sm font-bold transition-all duration-200 origin-bottom mt-[-45px]">Copied!</p>}
+            {isCopied && <p className="absolute w-auto p-2 min-w-max rounded-md text-white bg-red-800 text-sm font-bold transition-all duration-200 origin-bottom mt-[-45px]">Copied!</p>}
           </span>
         </div>
       </div>
