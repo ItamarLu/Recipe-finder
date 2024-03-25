@@ -1,7 +1,7 @@
 export function RecipeSkeleton() {
   return (
     <div
-      className="rounded-md bg-red-500 p-5 flex flex-col gap-3 md:w-1/2"
+      className="rounded-md bg-gradient-to-br from-red-500 to-orange-500 p-5 flex flex-col gap-3 md:w-1/2"
     >
       <div className="h-8 bg-slate-100 rounded animate-pulse"></div>
       <div className="flex flex-col gap-2 animate-pulse">
@@ -19,7 +19,7 @@ export function RecipeSkeleton() {
 export function RecipeSkeleton2() {
   return (
     <div
-      className="rounded-md bg-red-500 p-5 flex flex-col gap-3"
+      className="rounded-md bg-gradient-to-br from-red-500 to-orange-500 p-5 flex flex-col gap-3"
     >
       <div className="h-8 bg-slate-100 rounded animate-pulse"></div>
       <div className="flex flex-col gap-2 animate-pulse">

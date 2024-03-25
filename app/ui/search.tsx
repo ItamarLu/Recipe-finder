@@ -67,13 +67,13 @@ export default function Search() {
     <div className='flex flex-col gap-5'>
       <div className='flex flex-col md:flex-row gap-5'>
         <div className="flex flex-col items-start gap-5 md:w-1/2">
-          <form autoComplete="off" className="flex items-center gap-1 w-fit bg-red-500 rounded-md" onSubmit={handleAddIngredient}>
+          <form autoComplete="off" className="flex items-center gap-1 w-fit bg-gradient-to-br from-red-500 to-orange-500 rounded-md" onSubmit={handleAddIngredient}>
             <label htmlFor="ingredientInput" className="sr-only">
               Ingredient Input
             </label>
             <input
               id='ingredientInput'
-              className="bg-red-500 rounded-md py-2 pl-5 pr-1 placeholder:text-gray-200 h-[50px] outline-none text-slate-100"
+              className="bg-gradient-to-br from-red-500 to-orange-500 rounded-md py-2 pl-5 pr-1 placeholder:text-gray-200 h-[50px] outline-none text-slate-100"
               value={ingredient}
               placeholder="Enter Ingredient"
               onChange={handleIngredientInput}
@@ -92,7 +92,7 @@ export default function Search() {
           }
 
           {(ingredientsList && ingredientsList.length > 0) ? 
-            <button className="border-2 border-red-500 hover:border-red-900 bg-red-500 rounded-md py-2 px-4 duration-300"onClick={handleSearch}>
+            <button className="border-2 border-red-500 hover:border-red-900 bg-gradient-to-br from-red-500 to-orange-500 rounded-md py-2 px-4 duration-300"onClick={handleSearch}>
               <p className='text-slate-100'>Search Recipes</p>
             </button> : null
           }
