@@ -18,10 +18,10 @@ export default function OtherRecipes({ otherRecipes }: { otherRecipes: object[] 
           <button onClick={() => toggleModal(index)} className="invisible md:visible absolute top-0 right-0 m-3">
             <ArrowsPointingOutIcon className='size-7 text-slate-100 hover:text-red-900 duration-200'/>
           </button>
-          <h1 className='text-slate-100'>{recipe.title? recipe.title : 'Missing Name'}</h1>
+          <h1 className='text-slate-100'>{recipe.title}</h1>
           <ul className="list-inside text-slate-100">
             {recipe.ingredients.map((ing: any) => (
-              <li className="list-disc" key={ing}>{ing}</li>
+              <li className="list-disc" key={`recipe ${index} - ${ing}`}>{ing}</li>
             ))}
           </ul>
           <p className="text-justify text-slate-100">{recipe.instructions}</p>
@@ -31,7 +31,7 @@ export default function OtherRecipes({ otherRecipes }: { otherRecipes: object[] 
                 <button onClick={() => toggleModal(index)} className="absolute top-0 right-0 m-3">
                   <XMarkIcon className='size-7 text-slate-100 hover:text-red-900 duration-200'/>
                 </button>
-                <h2 className='text-slate-100'>{recipe.title ? recipe.title : 'Missing Name'}</h2>
+                <h2 className='text-slate-100'>{recipe.title}</h2>
                 <ul className="list-inside text-slate-100">
                   {recipe.ingredients.map((ing: any) => (
                     <li className="list-disc" key={ing}>{ing}</li>

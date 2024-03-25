@@ -24,6 +24,23 @@ export async function fetchRecipesByIngredients(ingredients: any) {
       ) ASC
       LIMIT 4;
     `;
+
+    while (recipes.rows.length < 4) {
+      const currentIngredient = ingredients.pop();
+      const additionalRecipes = await sql`
+        SELECT title, ingredients, instructions
+        FROM recipes
+        WHERE EXISTS (
+          SELECT 1
+          FROM jsonb_array_elements_text(processed_ingredients) AS ingredient
+          WHERE ingredient = ${currentIngredient}
+        )
+        ORDER BY random()
+        LIMIT ${4 - recipes.rows.length};
+      `;
+
+      recipes.rows = recipes.rows.concat(additionalRecipes.rows);
+    }
     return recipes.rows;
   } catch (error) {
     console.error('Database Error:', error);

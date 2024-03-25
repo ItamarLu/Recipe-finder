@@ -40,7 +40,6 @@ export default function Search() {
   const handleSearch = async () => {
     if (ingredientsList) {
       setIsSearching(true);
-      console.log(ingredientsList)
       try {
         const recipeQuery = await fetchRecipesByIngredients(ingredientsList);
         const formattedRecipe = {
