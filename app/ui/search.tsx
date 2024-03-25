@@ -73,7 +73,7 @@ export default function Search() {
             </label>
             <input
               id='ingredientInput'
-              className="bg-gradient-to-br from-red-500 to-orange-500 rounded-md py-2 pl-5 pr-1 placeholder:text-gray-200 h-[50px] outline-none text-slate-100"
+              className="bg-gradient-to-br from-red-500 to-orange-500 rounded-md py-2 pl-5 pr-1 placeholder:text-gray-200 h-[50px] outline-none text-slate-100 w-full"
               value={ingredient}
               placeholder="Enter Ingredient"
               onChange={handleIngredientInput}

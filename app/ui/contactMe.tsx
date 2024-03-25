@@ -53,7 +53,7 @@ export default function ContactMe() {
             className='hover:animate-pulse'
             alt="linkedin icon"/>
         </button>
-        <div className='group flex justify-center'>
+        <div className='group flex justify-end sm:justify-center'>
           <button onClick={handlePress}>
             {isActive? 
               <EnvelopeOpenIcon className='size-[25px] hover:animate-pulse text-slate-100'/> 
